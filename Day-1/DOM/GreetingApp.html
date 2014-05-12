@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Greeting App</title>
+	<script>	
+		var nameBox, btnGreet, divMessage;
+		function greet(){
+		    divMessage.innerText = "Hi " + nameBox.value;
+		    if (new Date().getHours() < 12){
+		    	divMessage.style.color = "green";
+		    } else {
+		    	divMessage.style.color = "red";
+		    }
+		}
+		function init(){
+			nameBox = document.getElementById("txtName");
+			btnGreet = document.getElementById("btnGreet");
+			divMessage = document.getElementById("divMessage");
+			
+			btnGreet.onclick = greet;
+			nameBox.onblur = toggleGreetButton;
+			toggleGreetButton();
+		}
+		function toggleGreetButton(){
+			if (nameBox.value === ''){
+				btnGreet.disabled = true;
+			} else {
+				btnGreet.disabled = false;
+			}
+		}
+		window.onload = init;
+	</script>
+</head>
+<body>
+	<span>Name :</span>
+	<input type="text" name="" id="txtName" value="Magesh">
+	<input type="button" value="Greet" id="btnGreet">
+	<div id="divMessage">[Message goes here]</div>
+
+</body>
+</html>

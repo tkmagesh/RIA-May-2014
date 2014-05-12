@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task Manager</title>
+	<style>
+	.error{
+		color : gray;
+		font-style: italic;
+	}
+	.completed{
+		color : red;
+		font-style: italic;
+		text-decoration: line-through;
+	}
+	</style>
+	<script>
+		var txtTask, btnAddTask, btnRemoveCompleted, taskError,ulTaskList;
+		window.addEventListener("DOMContentLoaded",init);
+		function init(){
+			txtTask = document.getElementById("txtTask");
+			btnAddTask = document.getElementById("btnAddTask");
+			btnRemoveCompleted = document.getElementById("btnRemoveCompleted")
+			taskError = document.getElementById("taskError");
+			ulTaskList = document.getElementById("ulTaskList");
+			taskError.style.display = "none";
+			btnAddTask.addEventListener("click",onBtnAddTaskClick);
+			txtTask.addEventListener("keypress",onTxtTaskKeyPress);
+			attachTaskItemEvents();
+		}
+		function onTxtTaskKeyPress(){
+			taskError.style.display = "none";
+		}
+		function onBtnAddTaskClick(){
+			var task = txtTask.value;
+			if (task === ""){
+				taskError.style.display = "block";
+			} else {
+				//var newTask = "<li>" + txtTask.value + "</li>";
+				//ulTaskList.innerHTML = ulTaskList.innerHTML + newTask;
+				var newTask = document.createElement("li");
+				newTask.innerText = task;
+				newTask.addEventListener("click",onTaskItemClick);
+				ulTaskList.appendChild(newTask);
+			}
+		}
+		function attachTaskItemEvents(){
+			var allTaskItems = document.getElementsByTagName("li");
+			for(var i=0;i<allTaskItems.length;i++){
+				var taskItem = allTaskItems[i];
+				taskItem.addEventListener("click",onTaskItemClick);
+			}
+		}
+		function onTaskItemClick(){
+			if (this.classList.contains("completed")){
+				this.classList.remove("completed");
+			} else {
+				this.classList.add("completed");
+			}
+			
+		}
+
+	</script>
+</head>
+<body>
+	<h1>Task Manager</h1>
+	<hr>
+	<span>Task :</span>
+	<input type="text" name="" id="txtTask">
+	<input type="button" value="Add Task" id="btnAddTask">
+	<input type="button" value="Remove Completed" id="btnRemoveCompleted">
+	<div class="error" id="taskError">*Task name cannot be empty</div>
+	<ul id="ulTaskList">
+		<li>Task - 1</li>
+		<li class="important completed">Task - 2</li>
+		<li>Task - 3</li>
+	</ul>
+</body>
+</html>

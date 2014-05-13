@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Greeting App</title>
+	<script src="jquery-2.1.1.js"></script>
+	<script>	
+		var nameBox, btnGreet, divMessage;
+		function greet(){
+		    //divMessage.innerText = "Hi " + nameBox.value;
+		    $("#divMessage").text("Hi " + $("#txtName").val());
+
+		    //divMessage.style.color =  (new Date().getHours() < 12 ? "green" : "red");
+		    $("#divMessage").css("color", new Date().getHours() < 12 ? "green" : "red")
+		}
+		function init(){
+			nameBox = document.getElementById("txtName");
+			btnGreet = document.getElementById("btnGreet");
+			divMessage = document.getElementById("divMessage");
+			
+			//btnGreet.onclick = greet;
+			//btnGreet.addEventListener("click",greet);
+			$("#btnGreet").click(greet);
+			
+			//nameBox.onblur = toggleGreetButton;
+			//nameBox.addEventListener("blur",toggleGreetButton);
+			$("#txtName").blur(toggleGreetButton);
+			toggleGreetButton();
+		}
+		function toggleGreetButton(){
+			//btnGreet.disabled = (nameBox.value === '');
+			$("#btnGreet").prop("disabled", $("#txtName").val() === '');
+		}
+		//window.onload = init;
+		//$(document).ready(init);
+		$(init);
+	</script>
+</head>
+<body>
+	<span>Name :</span>
+	<input type="text" name="" id="txtName" value="Magesh">
+	<input type="button" value="Greet" id="btnGreet">
+	<div id="divMessage">[Message goes here]</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Greeting App</title>
+	<script src="jquery-2.1.1.js"></script>
+	<script>	
+		
+		function greet(){
+		    $("#divMessage").text("Hi " + $("#txtName").val());
+		    $("#divMessage").css("color", new Date().getHours() < 12 ? "green" : "red")
+		}
+
+		$(function(){
+			$("#btnGreet").click(greet);
+			$("#txtName").blur(toggleGreetButton);
+			toggleGreetButton();
+		});
+		function toggleGreetButton(){
+			$("#btnGreet").prop("disabled", $("#txtName").val() === '');
+		}
+		
+	</script>
+</head>
+<body>
+	<span>Name :</span>
+	<input type="text" name="" id="txtName" value="Magesh">
+	<input type="button" value="Greet" id="btnGreet">
+	<div id="divMessage">[Message goes here]</div>
+
+</body>
+</html>

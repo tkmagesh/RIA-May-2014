@@ -7,24 +7,26 @@
 	<script>	
 		
 		function greet(){
-		    $("#divMessage").text("Hi " + $("#txtName").val());
-		    $("#divMessage").css("color", new Date().getHours() < 12 ? "green" : "red")
+		    $("#divMessage")
+		    	.text("Hi " + $("#txtName").val())
+		    	.css("color", new Date().getHours() < 12 ? "green" : "red");
 		}
 
 		$(function(){
 			$("#btnGreet").click(greet);
-			$("#txtName").blur(toggleGreetButton);
-			toggleGreetButton();
+			$("#txtName")
+				.blur(function(){
+					$("#btnGreet").prop("disabled", $("#txtName").val() === '');
+				})
+				.trigger('blur');
 		});
-		function toggleGreetButton(){
-			$("#btnGreet").prop("disabled", $("#txtName").val() === '');
-		}
+		
 		
 	</script>
 </head>
 <body>
 	<span>Name :</span>
-	<input type="text" name="" id="txtName" value="Magesh">
+	<input type="text" name="" id="txtName" value="">
 	<input type="button" value="Greet" id="btnGreet">
 	<div id="divMessage">[Message goes here]</div>
 

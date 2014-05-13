@@ -13,13 +13,17 @@
 		font-style: italic;
 		text-decoration: line-through;
 	}
-	#divMessage{
-		padding : 15px;
+	#divMessages{
+		position : absolute;
+		bottom : 0px;
+		right : 0px;
+	}
+	.divMessage{
+		padding : 5px;
 		border : 1px solid black;
-		border-radius: 10px;
+		border-radius: 4px;
 		background-color: #e7e7e7;
-		width : 400px;
-		display: none;
+		margin : 5px;
 	}
 	</style>
 	<script src="jquery-2.1.1.js"></script>
@@ -48,7 +52,7 @@
 
 		});
 		function onBtnRemoveCompleted(){
-			$("#ulTaskList > li.completed").fadeOut(10000,function(){
+			$("#ulTaskList > li.completed").fadeOut(400,function(){
 				$(this).remove();
 			});
 			displayMessage("Zero or more completed tasks are removed!!");
@@ -68,7 +72,17 @@
 		}
 
 		function displayMessage(msg){
-			$("#divMessage").html(msg).hide().fadeIn().delay(3000).slideUp('fast');
+			$("<div>")
+				.addClass("divMessage")
+				.html(msg)
+				.appendTo("#divMessages")
+				.hide()
+				.slideDown(400)
+				.delay(5000)
+				.fadeOut(600,function(){
+					$(this).remove();
+				});
+			//$("#divMessage").html(msg).hide().fadeIn().delay(3000).slideUp('fast');
 		}
 
 	</script>
@@ -86,6 +100,6 @@
 		<li class="important completed">Task - 2</li>
 		<li>Task - 3</li>
 	</ul>
-	<div id="divMessage"></div>
+	<div id="divMessages"></div>
 </body>
 </html>

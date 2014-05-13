@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Event Bubbling Demo</title>
+	<style type="text/css">
+	div{
+		padding: 20px;
+		border-width: 2px;
+		border-style: solid;
+	}
+	.first{
+		border-color: blue;
+		background-color: lightblue;
+	}
+	.second{
+		border-color: red;
+		background-color: lightpink;
+	}
+	.third{
+		border-color: black;
+		background-color: gray;
+	}
+	span{
+		padding: 20px;
+		background-color: white;
+		border : 1px solid darkgray;
+	}
+	</style>
+	<script>
+	window.addEventListener("DOMContentLoaded",function(){
+		function onClick(e){
+			console.log(this.nodeName);
+			console.dir(e);
+			e.stopPropagation();
+		}
+		
+		document.getElementById("div-1").addEventListener("click",onClick);
+		document.body.addEventListener("click",onClick);
+		document.documentElement.addEventListener("click",onClick);
+	});
+	</script>
+</head>
+<body>
+	<div class="first" id="div-1">
+		<div class="second" id="div-2">
+			<div class="third" id="div-3"><span id="span">This is a sample content</span></div>
+		</div>
+	</div>
+</body>
+</html>

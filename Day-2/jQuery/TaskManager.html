@@ -13,6 +13,14 @@
 		font-style: italic;
 		text-decoration: line-through;
 	}
+	#divMessage{
+		padding : 15px;
+		border : 1px solid black;
+		border-radius: 10px;
+		background-color: #e7e7e7;
+		width : 400px;
+		display: none;
+	}
 	</style>
 	<script src="jquery-2.1.1.js"></script>
 	<script>
@@ -41,6 +49,7 @@
 		});
 		function onBtnRemoveCompleted(){
 			$("#ulTaskList > li.completed").remove();
+			displayMessage("Zero or more completed tasks are removed!!");
 		}
 		function onTxtTaskKeyPress(){
 			$taskError.hide();
@@ -49,10 +58,15 @@
 			$txtTask.val() === "" 
 				? $taskError.show() 
 				: $("<li></li>").text($txtTask.val()).appendTo("#ulTaskList");
+			displayMessage("A new task is added!");
 		}
 		
 		function onTaskItemClick(){
 			$(this).toggleClass("completed");
+		}
+
+		function displayMessage(msg){
+			$("#divMessage").html(msg).hide().fadeIn().delay(3000).slideUp('fast');
 		}
 
 	</script>
@@ -70,5 +84,6 @@
 		<li class="important completed">Task - 2</li>
 		<li>Task - 3</li>
 	</ul>
+	<div id="divMessage"></div>
 </body>
 </html>

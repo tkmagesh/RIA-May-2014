@@ -1,0 +1,10 @@
+{"data" : {
+	"products" : [
+		{"id" : 1, "name" : "pen", "cost" : 10, "units" : 30},
+		{"id" : 5, "name" : "ten", "cost" : 50, "units" : 70},
+		{"id" : 3, "name" : "den", "cost" : 30, "units" : 40},
+		{"id" : 7, "name" : "hen", "cost" : 90, "units" : 80},
+		{"id" : 9, "name" : "zen", "cost" : 60, "units" : 90}
+	]
+	}
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax Demo</title>
+	<script src="jquery-2.1.1.js"></script>
+	<script src="handlebars.js"></script>
+	<script type="text/template" id="productsTemplate">
+		<h3>Products List</h3>
+		<hr>
+		<table>
+			<thead>
+				<tr>
+					<th>Id </th>
+					<th>Name </th>
+					<th>Units</th>
+					<th>Cost</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each products}}
+				<tr>
+					<td>{{id}}</td>
+					<td>{{name}}</td>
+					<td>{{units}}</td>
+					<td>{{cost}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</script>
+	<script>
+	$(function(){
+		$("#btnGetHTML").click(function(){
+			/*
+			$.get("remotePage.html",null,function(response){
+				$("#divServerContent").append(response);
+			},"html");
+			*/
+
+			$("#divServerContent").load("remotePage.html");
+		});
+		$("#btnGetData").click(function(){
+			$.get("products.json",function(response){
+				/*var $productsTable = $("<table></table>");
+				$(response.data.products).each(function(index,product){
+					var productRow = "<tr><td>" + index.toString() + "</td><td>" + product.id + "</td><td>" + product.name + "</td><td>" + product.units + "</td><td>" + product.cost + "</td></tr>";
+					$productsTable.append(productRow);
+				});
+				$("#divServerContent").append($productsTable);
+				*/
+
+				var templateHTML = $("#productsTemplate").html();
+				var template = Handlebars.compile(templateHTML);
+				var generatedHTML = template(response.data);
+				$("#divServerContent").append(generatedHTML);
+			},"json");
+		})
+	});
+	</script>
+</head>
+<body>
+	<input type="button" value="Get HTML" id="btnGetHTML">
+	<input type="button" value="Get Products" id="btnGetData">
+	<div id="divServerContent">
+		
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,20 @@
+.error{
+	color : gray;
+	font-style: italic;
+}
+.completed{
+	color : red;
+	font-style: italic;
+	text-decoration: line-through;
+}
+#divMessage{
+	padding : 15px;
+	border : 1px solid black;
+	border-radius: 10px;
+	background-color: #e7e7e7;
+	width : 400px;
+	display: none;
+}
+#divUpdateStatus{
+	display : none;
+}

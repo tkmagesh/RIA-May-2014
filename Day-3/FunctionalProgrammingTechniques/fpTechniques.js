@@ -147,3 +147,18 @@ var categories = [
 	]
 
 */
+
+function join(leftList,rightList,leftKeyName,rightKeyName,transformFn){
+  var result = [];
+  for(var i=0;i<leftList.length;i++){
+    var leftKey = leftList[i][leftKeyName];
+    for(var j=0;j<rightList.length;j++){
+       var rightKey = rightList[j][rightKeyName];
+       if (leftKey === rightKey){
+          result.push(transformFn(leftList[i],rightList[j]));
+       }
+    }
+  }
+  return result;
+}
+

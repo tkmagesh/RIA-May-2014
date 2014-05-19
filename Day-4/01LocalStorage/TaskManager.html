@@ -23,32 +23,27 @@
 	}
 	</style>
 	<script src="jquery-2.1.1.js"></script>
+	<script src="TaskStorage.js"></script>
 	<script>
-		var $txtTask, $taskError;
+		var $txtTask, $taskError, taskStorage;
 		$(function(){
 			$txtTask = $("#txtTask").on("keypress", onTxtTaskKeyPress);
-	 		//$("#btnAddTask").click(onBtnAddTaskClick);
 	 		$("#btnAddTask").on("click", onBtnAddTaskClick);
 			$("#btnRemoveCompleted").click(onBtnRemoveCompleted);
 			$taskError = $("#taskError").hide();
-			//$("#ulTaskList > li").click(onTaskItemClick);
-
-			//$("#ulTaskList").delegate("li","click",onTaskItemClick);
 			$("#ulTaskList").on("click","li",onTaskItemClick);
-
-			/*var evtObj = {
-				focus : function(){
-					console.log("I juz gained focus");
-				},
-				blur : function(){
-					console.log("I juz lost focus");
-				}
-			};
-			$txtTask.bind(evtObj);*/
-
+			taskStorage = new TaskStorage();
+			loadTasksFromStorage();
 		});
+		function loadTasksFromStorage(){
+			var tasks = taskStorage.getAllTasks();
+			tasks.forEach(function(t){ addTaskToList(t);});
+		}
+		
 		function onBtnRemoveCompleted(){
 			$("#ulTaskList > li.completed").fadeOut(10000,function(){
+				var id = $(this).attr("task-id");
+				taskStorage.removeItem(id);
 				$(this).remove();
 			});
 			displayMessage("Zero or more completed tasks are removed!!");
@@ -58,17 +53,23 @@
 		}
 		function onBtnAddTaskClick(){
 			
-			$txtTask.val() === "" 
-				? $taskError.show() 
-				: $("<li></li>")
-					.text($txtTask.val())
-
-					.hide()
+			if ($txtTask.val() === "") {
+				$taskError.show() 
+			} else {
+				var newTask = taskStorage.addNew($txtTask.val());
+				addTaskToList(newTask);
+			}
+		}
+		
+		function addTaskToList(task){
+			 $("<li></li>")
+					.text(task.name)
+					.attr("task-id",task.id)	
+					.hide()	
 					.appendTo("#ulTaskList")
 					.slideDown('slow');
 			displayMessage("A new task is added!");
 		}
-		
 		function onTaskItemClick(){
 			$(this).toggleClass("completed");
 		}

@@ -2,15 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Prime Finder</title>
+	<title>Prime Finders Using Web Workers</title>
 	<script>
 	(function(){
-		function isPrime(n){
-			if (n<=3) return true;
-			for(var i=2;i<=(n/2);i++)
-				if (n % i === 0) return false;
-			return true;
-		}
 		window.addEventListener("DOMContentLoaded",init);
 		var txtStart, txtEnd, divMessage;
 		function init(){
@@ -21,24 +15,13 @@
 		function onBtnFindPrimeCountClick(){
 			var start = parseInt(txtStart.value,10),
 				end = parseInt(txtEnd.value,10);
-				findPrimeCount(start,end,onProgressCallback)
-				
-			//displayMessage(primeCount + " prime numbers are found..");
+			var worker = new Worker("PrimeFinder.js");
+			worker.addEventListener("message",onMessageFromWorker);
+			worker.postMessage({start : start, end : end});
 		}
-		function findPrimeCount(start,end,onProgress){
-			var primeCount = 0
-				currentNumber = start;
-			function oneIteration(){
-				if (isPrime(currentNumber)){
-					++primeCount;
-					var percentCompleted = ((currentNumber - start)/(end - start)) * 100;
-					onProgress(primeCount,percentCompleted);
-				}
-				if (++currentNumber <= end){
-					setTimeout(oneIteration);
-				}
-			}
-			oneIteration();
+		function onMessageFromWorker(msgEvt){
+			var outputData = msgEvt.data;
+			onProgressCallback(outputData.primeCount, outputData.percentCompleted);
 		}
 		function onProgressCallback(primeCount, percentCompleted){
 			displayMessage(primeCount + " prime numbers are found");
@@ -48,7 +31,6 @@
 			document.getElementById("divMessage").innerHTML = msg;
 		}
 	})();
-	
 	</script>
 </head>
 <body>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>New Input Types</title>
+	<script>
+		function isInputTypeSupported(inputType){
+		   if (inputType === "text") return true;
+		   var elem = document.createElement("input");
+		   elem.setAttribute("type",inputType);
+		   return elem.type !== "text";
+		}
+	</script>
+</head>
+<body>
+	<input type="number" name="" id="">
+	<br>
+	<input type="range" name="" id="">
+	<br>
+	<input type="color" name="" id="">
+	<br>
+	<input type="date" name="" id="">
+	<br>
+	<input type="email" name="" id="">
+	<br>
+	<input type="url" name="" id="">
+	<br>
+	<input type="time"><br>
+	<input type="week" name="" id=""><br>
+	<input type="month" name="" id=""><br>
+</body>
+</html>
